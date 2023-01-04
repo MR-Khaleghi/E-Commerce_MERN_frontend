@@ -4,10 +4,12 @@ node_modules
 node_modules
 
 # production
-build
+
 
 
 package-lock.json
 .DS_Store
 .env
 .env.local
+
+config.js
