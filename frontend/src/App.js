@@ -35,7 +35,10 @@ import ProductEditScreen from './screens/ProductEditScreen';
 import OrderListScreen from './screens/OrderListScreen';
 import SellerScreen from './screens/SellerScreen';
 
+export const base_URL = `https://ecommerce-mern-backend.onrender.com`;
+
 function App() {
+ 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
   // console.log(userInfo);
@@ -57,7 +60,8 @@ function App() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get(`/api/products/categories`);
+        console.log( base_URL+`/api/products/categories`);
+        const { data } = await axios.get(base_URL+`/api/products/categories`);
         setCategories(data);
       } catch (err) {
         toast.error(getError(err));

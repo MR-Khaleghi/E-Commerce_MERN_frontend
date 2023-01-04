@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import { Helmet } from 'react-helmet-async';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { base_URL } from '../App';
 import { Store } from '../Store';
 import { getError } from '../utils';
 
@@ -23,7 +24,7 @@ export default function SigninScreen() {
     e.preventDefault();
     try {
       console.log('fired');
-      const { data } = await axios.post('/api/users/signin', {
+      const { data } = await axios.post(base_URL+'/api/users/signin', {
         email,
         password,
       });

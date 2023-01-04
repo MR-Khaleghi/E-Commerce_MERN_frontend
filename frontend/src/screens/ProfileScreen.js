@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/esm/Button';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { getError } from '../utils';
+import { base_URL } from '../App';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -55,7 +56,7 @@ export default function ProfileScreen() {
     try {
       dispatch({ type: 'UPDATE_REQUEST' });
       const { data } = await axios.put(
-        `/api/users/profile`,
+        base_URL+`/api/users/profile`,
         { name, email, password, sellerName, sellerLogo, sellerDescription },
         {
           headers: { authorization: `Bearer ${userInfo.token}` },

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useReducer } from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import { useNavigate } from 'react-router-dom';
+import { base_URL } from '../App';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { Store } from '../Store';
@@ -95,7 +96,7 @@ export default function ProductListScreen(props) {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
         const seller = userInfo._id;
-        const { data } = await axios.get(`/api/products?seller=${seller}`);
+        const { data } = await axios.get(base_URL+`/api/products?seller=${seller}`);
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
         // console.log(data);
       } catch (err) {
@@ -116,7 +117,7 @@ export default function ProductListScreen(props) {
     try {
       createDispatch({ type: 'Create_REQUEST' });
       const { data } = await axios.post(
-        `/api/products`,
+        base_URL+`/api/products`,
         {},
         {
           headers: { authorization: `Bearer ${userInfo.token}` },
@@ -134,7 +135,7 @@ export default function ProductListScreen(props) {
     if (window.confirm('Are you sure?')) {
       try {
         deleteDispatch({ type: 'DELETE_REQUEST' });
-        const { data } = await axios.delete(`/api/products/${product._id}`, {
+        const { data } = await axios.delete(base_URL+`/api/products/${product._id}`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
         deleteDispatch({ type: 'DELETE_SUCCESS', payload: data });

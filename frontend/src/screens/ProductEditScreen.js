@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/esm/Container';
 import Form from 'react-bootstrap/Form';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
+import { base_URL } from '../App';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { Store } from '../Store';
@@ -85,7 +86,7 @@ export default function ProductEditScreen() {
       const fetchData = async () => {
         dispatch({ type: 'FETCH_START' });
         try {
-          const result = await axios.get(`/api/products/${id}`);
+          const result = await axios.get(base_URL+`/api/products/${id}`);
           // console.log(result);
           dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
           //   console.log(result.data);
@@ -123,7 +124,7 @@ export default function ProductEditScreen() {
     try {
       updateDispatch({ type: 'Update_REQUEST' });
       const { data } = await axios.put(
-        `/api/products/${product._id}`,
+        base_URL+`/api/products/${product._id}`,
         {
           _id: id,
           name,
@@ -160,7 +161,7 @@ export default function ProductEditScreen() {
     try {
       uploadDispatch({ type: 'Upload_REQUEST' });
 
-      const { data } = await axios.post(`/api/uploads/`, bodyFormData, {
+      const { data } = await axios.post(base_URL+`/api/uploads/`, bodyFormData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           authorization: `Bearer ${userInfo.token}`,

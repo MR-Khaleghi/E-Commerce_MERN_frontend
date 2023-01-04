@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet-async';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { base_URL } from '../App';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Product from '../components/Product';
@@ -90,7 +91,7 @@ export default function SearchScreen() {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
         const { data } = await axios.get(
-          `/api/products/search?page=${page}&query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`
+          base_URL+`/api/products/search?page=${page}&query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`
         );
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {
@@ -105,7 +106,7 @@ export default function SearchScreen() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get(`/api/products/categories`);
+        const { data } = await axios.get(base_URL+`/api/products/categories`);
         setCategories(data);
       } catch (err) {
         toast.error(getError(err));

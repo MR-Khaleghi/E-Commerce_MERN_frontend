@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useReducer } from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
+import { base_URL } from '../App';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { Store } from '../Store';
@@ -34,7 +35,7 @@ export default function OrderHistoryScreen() {
     const fetchData = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-        const { data } = await axios.get(`/api/orders/mine`, {
+        const { data } = await axios.get(base_URL+`/api/orders/mine`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: 'FETCH_SUCCESS', payload: data });

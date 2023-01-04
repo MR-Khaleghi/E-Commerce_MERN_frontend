@@ -15,6 +15,7 @@ import MessageBox from '../components/MessageBox';
 import { getError } from '../utils';
 import { Store } from '../Store';
 import { toast } from 'react-toastify';
+import { base_URL } from '../App';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -60,7 +61,7 @@ function ProductScreen() {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_START' });
       try {
-        const result = await axios.get(`/api/products/slug/${slug}`);
+        const result = await axios.get(base_URL+`/api/products/slug/${slug}`);
         // console.log(result);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
         // setProducts(result.data);
@@ -78,7 +79,7 @@ function ProductScreen() {
   const addToCartHandler = async () => {
     const existItem = cart.cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(`/api/products/${product._id}`);
+    const { data } = await axios.get(base_URL+`/api/products/${product._id}`);
     if (data.countInStock < quantity) {
       window.alert('Sorry. product is out stock');
       return;
@@ -109,7 +110,7 @@ function ProductScreen() {
       try {
         reviewDispatch({ type: 'REVIEW_START' });
         const { data } = await axios.post(
-          `/api/products/${product._id}/reviews`,
+          base_URL+`/api/products/${product._id}/reviews`,
           { rating, comment, name: userInfo.name }, // review
           {
             headers: { authorization: `Bearer ${userInfo.token}` },

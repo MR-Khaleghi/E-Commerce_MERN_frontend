@@ -12,6 +12,7 @@ import { Helmet } from 'react-helmet-async';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Product from '../components/Product';
+import { base_URL } from '../App';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -70,7 +71,7 @@ export default function SellerScreen() {
       // console.log('product fired');
       dispatch({ type: 'FETCH_START' });
       try {
-        const result = await axios.get(`/api/products?seller=${sellerId}`);
+        const result = await axios.get(base_URL+`/api/products?seller=${sellerId}`);
         // console.log(result);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
         // console.log(result.data);
@@ -86,7 +87,7 @@ export default function SellerScreen() {
       try {
         // console.log('user fired');
         dispatchSeller({ type: 'USER_FETCH_REQUEST' });
-        const { data } = await axios.get(`/api/users/${sellerId}`, {});
+        const { data } = await axios.get(base_URL+`/api/users/${sellerId}`, {});
         dispatchSeller({ type: 'USER_FETCH_SUCCESS', payload: data });
       } catch (err) {
         dispatchSeller({ type: 'USER_FETCH_FAIL', payload: getError(err) });

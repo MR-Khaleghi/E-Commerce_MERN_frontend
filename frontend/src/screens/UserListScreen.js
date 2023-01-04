@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { base_URL } from '../App';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { Store } from '../Store';
@@ -77,7 +78,7 @@ export default function UserListScreen() {
     if (window.confirm('Are you sure?')) {
       try {
         deleteDispatch({ type: 'DELETE_REQUEST' });
-        const { data } = await axios.delete(`/api/users/${user._id}`, {
+        const { data } = await axios.delete(base_URL+`/api/users/${user._id}`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
         deleteDispatch({ type: 'DELETE_SUCCESS', payload: data });

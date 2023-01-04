@@ -10,6 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import MessageBox from '../components/MessageBox';
 import { Store } from '../Store';
 import axios from 'axios';
+import { base_URL } from '../App';
 
 function CartScreen() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function CartScreen() {
   } = state;
 
   const updateCartHandler = async (item, quantity) => {
-    const { data } = await axios.get(`/api/products/${item._id}`);
+    const { data } = await axios.get(base_URL+`/api/products/${item._id}`);
     if (data.countInStock < quantity) {
       window.alert('Sorry. product is out stock');
       return;
