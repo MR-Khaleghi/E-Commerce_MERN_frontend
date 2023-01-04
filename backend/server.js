@@ -1,3 +1,4 @@
+import './config.js';
 import express from 'express';
 import mongoose from 'mongoose';
 import seedRouter from './routes/seedRoutes.js';
@@ -7,6 +8,7 @@ import orderRouter from './routes/orderRoutes.js';
 import uploadRouter from './routes/uploadRoute.js';
 import path from 'path';
 const MONGODB_URL = process.env.MONGODB_URL;
+// console.log(`${MONGODB_URL}`);
 mongoose
   .connect(MONGODB_URL)
   .then(() => console.log('connected mongo'))
