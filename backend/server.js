@@ -15,7 +15,7 @@ mongoose
   .catch((err) => console.log("coudn't connect to mongo"));
 
 const app = express();
-// these 2 are used by post
+// these 2 are used by  post
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/uploads', uploadRouter);
