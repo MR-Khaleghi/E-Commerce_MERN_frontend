@@ -7,6 +7,8 @@ import userRouter from './routes/userRoutes.js';
 import orderRouter from './routes/orderRoutes.js';
 import uploadRouter from './routes/uploadRoute.js';
 import path from 'path';
+import cors from 'cors';
+
 const MONGODB_URL = process.env.MONGODB_URL;
 // console.log(`${MONGODB_URL}`);
 mongoose
@@ -16,6 +18,7 @@ mongoose
 
 const app = express();
 // these 2 are used by  post
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/uploads', uploadRouter);
