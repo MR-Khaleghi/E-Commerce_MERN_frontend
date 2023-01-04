@@ -1,0 +1,21 @@
+﻿{
+  "name": "Commerce_MERN_all",
+  "version": "1.0.0",
+  "description": "Demo ",
+  "main": "index.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "build": "cd backend && npm install && cd ../frontend && npm install && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MR-Khaleghi/E-Commerce_MERN_all.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MR-Khaleghi/E-Commerce_MERN_all/issues"
+  },
+  "homepage": "https://github.com/MR-Khaleghi/E-Commerce_MERN_all#readme"
+}
