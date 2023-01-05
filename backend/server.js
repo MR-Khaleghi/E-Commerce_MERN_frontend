@@ -10,7 +10,7 @@ import path from 'path';
 import cors from 'cors';
 
 const MONGODB_URL = process.env.MONGODB_URL;
-// console.log(`${MONGODB_URL}`);
+//  console.log(`${MONGODB_URL}`);
 mongoose
   .connect(MONGODB_URL)
   .then(() => console.log('connected mongo'))
