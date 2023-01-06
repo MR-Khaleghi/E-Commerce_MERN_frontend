@@ -180,7 +180,7 @@ function App() {
                   to={{
                     pathname: "/search",
                     search: `?category=${category}`,
-                    hash: "#the-hash",
+                    hash: "",
                   }}
                   onClick={() => setSidebarIsOpen(false)}
                 >

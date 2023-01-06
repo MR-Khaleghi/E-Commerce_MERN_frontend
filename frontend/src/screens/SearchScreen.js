@@ -122,7 +122,13 @@ export default function SearchScreen() {
     const filterRating = filter.rating || rating;
     const filterPrice = filter.price || price;
     const filterOrder = filter.order || order;
-    return `/search?page=${filterPage}&query=${filterQuery}&category=${filterCategory}&price=${filterPrice}&rating=${filterRating}&order=${filterOrder}`;
+    const search = `?page=${filterPage}&query=${filterQuery}&category=${filterCategory}&price=${filterPrice}&rating=${filterRating}&order=${filterOrder}`;
+    const hash = "";
+    return (
+      {pathname: "/search",
+       search,
+       hash,
+      });
   };
   return (
     <div>
