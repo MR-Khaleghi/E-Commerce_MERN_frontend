@@ -186,11 +186,11 @@ productRouter.post('/:id/reviews', isAuth, async (req, res) => {
   }
 });
 
-productRouter.post('/', async (req, res) => {
+productRouter.post('/', isAuth, isSellerOrAdmin, async (req, res) => {
   const product = new Product({
     name: 'sample name' + Date.now(),
     slug: 'sample slug' + Date.now(),
-    seller: req.user._id,
+    seller: req.body.userId,
     image: '/images/p1.jpg',
     brand: 'sample brand',
     category: 'sample category',

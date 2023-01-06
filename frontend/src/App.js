@@ -36,6 +36,7 @@ import OrderListScreen from './screens/OrderListScreen';
 import SellerScreen from './screens/SellerScreen';
 
 export const base_URL = `https://ecommerce-mern-backend.onrender.com`;
+// export const base_URL = `http://localhost:10000`;
 
 function App() {
  

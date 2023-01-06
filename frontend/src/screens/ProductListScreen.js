@@ -76,9 +76,11 @@ function reducerDeleteProduct(state, action) {
 }
 
 export default function ProductListScreen(props) {
+  
   const navigate = useNavigate();
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
+  // console.log(userInfo);
   const [{ loading, error, products }, dispatch] = useReducer(reducer, {
     loading: true,
     error: '',
@@ -118,7 +120,7 @@ export default function ProductListScreen(props) {
       createDispatch({ type: 'Create_REQUEST' });
       const { data } = await axios.post(
         base_URL+`/api/products`,
-        {},
+        {userId : userInfo._id},
         {
           headers: { authorization: `Bearer ${userInfo.token}` },
         }
