@@ -10,6 +10,7 @@ import { base_URL } from '../App';
 
 function Product(props) {
   const { product } = props;
+  console.log(product);
   // console.log(product.seller.seller.name);
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
