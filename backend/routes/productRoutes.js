@@ -81,7 +81,10 @@ productRouter.get(
       ...categoryFilter,
       ...priceFilter,
       ...ratingFilter,
-    })
+    }).populate(
+      'seller',
+      'seller.name'
+    )
       .sort(sortOrder)
       .skip(pageSize * (page - 1)) // fetch docs after # documents
       .limit(pageSize); // fetch pageSize docs
