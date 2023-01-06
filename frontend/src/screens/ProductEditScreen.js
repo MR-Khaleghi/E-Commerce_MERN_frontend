@@ -131,7 +131,7 @@ export default function ProductEditScreen() {
           name,
           price,
           image,
-          category,
+          category: category.toLowerCase(),
           brand,
           countInStock,
           description,
