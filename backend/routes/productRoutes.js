@@ -148,7 +148,7 @@ productRouter.put('/:id', isAuth, isSellerOrAdmin, async (req, res) => {
     product.countInStock = req.body.countInStock;
     product.description = req.body.description;
     const updatedProduct = await product.save();
-    res.send({ message: 'Product Not found', product: updatedProduct });
+    res.send({ message: 'Product updated', product: updatedProduct });
   } else {
     res.status(404).send({ message: 'Product Not found' });
   }
@@ -186,7 +186,7 @@ productRouter.post('/:id/reviews', isAuth, async (req, res) => {
   }
 });
 
-productRouter.post('/', isAuth, isSellerOrAdmin, async (req, res) => {
+productRouter.post('/', async (req, res) => {
   const product = new Product({
     name: 'sample name' + Date.now(),
     slug: 'sample slug' + Date.now(),
@@ -201,6 +201,7 @@ productRouter.post('/', isAuth, isSellerOrAdmin, async (req, res) => {
     numReviews: 0,
   });
   const createdProduct = await product.save();
+  console.log("raw product in backend created");
   res.send({ message: 'Product Created', product: createdProduct });
 });
 

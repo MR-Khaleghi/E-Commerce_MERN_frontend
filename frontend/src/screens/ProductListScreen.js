@@ -124,10 +124,12 @@ export default function ProductListScreen(props) {
         }
       );
       createDispatch({ type: 'Create_SUCCESS', payload: data.product });
-      //   console.log(data.product);
+        console.log(data.product);
+        console.log("Raw product created and navigate to edit");
       navigate(`/product/${data.product._id}/edit`);
     } catch (err) {
       createDispatch({ type: 'Create_FAIL', payload: getError(err) });
+      console.log("Raw product Error");
     }
   };
 

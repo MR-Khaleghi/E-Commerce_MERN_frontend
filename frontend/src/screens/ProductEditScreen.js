@@ -62,6 +62,7 @@ function reducerUploadImage(state, action) {
 let updateSuccessFlag = false;
 
 export default function ProductEditScreen() {
+  console.log("product edit screen");
   let uploadSuccessFlag = false;
   let updateSuccessFlag = false;
   const navigate = useNavigate();
