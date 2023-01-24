@@ -12,29 +12,30 @@ function Product(props) {
   console.log(product);
   // console.log(product.seller.seller.name);
   const dispatch = useDispatch();
-  const { cart : {cartItems}} = useSelector(state => state.cart);
-  
-
- 
-  
+  const {
+    cart: { cartItems },
+  } = useSelector((state) => state.cart);
 
   const addToCartHandler = async (item) => {
     const existItem = cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(base_URL+`/api/products/${item._id}`);
+    const { data } = await axios.get(base_URL + `/api/products/${item._id}`);
 
     if (data.countInStock < quantity) {
       window.alert('Sorry. product is out stock');
       return;
     }
     dispatch(CART_ADD_ITEM({ ...item, quantity }));
-    
   };
 
   return product ? (
     <Card>
       <Link to={`/product/${product.slug}`}>
-        <img src={base_URL+product.image} className="card-img-top" alt={product.name} />
+        <img
+          src={base_URL + product.image}
+          className="card-img-top"
+          alt={product.name}
+        />
       </Link>
       <Card.Body>
         <Link to={`/product/${product.slug}`}>

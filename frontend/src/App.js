@@ -30,8 +30,10 @@ import SellerScreen from './screens/SellerScreen';
 import { useSelector } from 'react-redux';
 import NavBar from './components/Navbar';
 
-export const base_URL = `https://ecommerce-mern-backend.onrender.com`;
-// export const base_URL = 'http://localhost:10000';
+const dev = false;
+export const base_URL = dev
+  ? 'http://localhost:10000'
+  : `https://ecommerce-mern-backend.onrender.com`;
 
 function App() {
   const { userInfo } = useSelector((state) => state.userInfo);

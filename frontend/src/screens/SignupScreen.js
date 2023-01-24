@@ -21,8 +21,9 @@ export default function SignupScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isSeller, setIsSeller] = useState(false);
   const dispatch = useDispatch();
-  const {  userInfo } = useSelector(state => state.userInfo);
+  const { userInfo } = useSelector((state) => state.userInfo);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -32,10 +33,11 @@ export default function SignupScreen() {
     }
     try {
       console.log('fired');
-      const { data } = await axios.post(base_URL+'/api/users/signup', {
+      const { data } = await axios.post(base_URL + '/api/users/signup', {
         name,
         email,
         password,
+        isSeller,
       });
       dispatch(USER_SIGNIN(data));
       localStorage.setItem('userInfo', JSON.stringify(data));
@@ -89,6 +91,13 @@ export default function SignupScreen() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </Form.Group>
+        <Form.Check
+          type="switch"
+          id="isSeller-checkbox"
+          label="Are you a Seller?"
+          onChange={() => setIsSeller(!isSeller)}
+        />
+        <br />
         <div className="mb-3">
           <Button variant="primary" type="submit">
             Sign Up

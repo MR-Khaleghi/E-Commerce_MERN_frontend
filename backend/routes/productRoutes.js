@@ -81,10 +81,8 @@ productRouter.get(
       ...categoryFilter,
       ...priceFilter,
       ...ratingFilter,
-    }).populate(
-      'seller',
-      'seller.name'
-    )
+    })
+      .populate('seller', 'seller.name')
       .sort(sortOrder)
       .skip(pageSize * (page - 1)) // fetch docs after # documents
       .limit(pageSize); // fetch pageSize docs
@@ -151,6 +149,7 @@ productRouter.put('/:id', isAuth, isSellerOrAdmin, async (req, res) => {
     product.countInStock = req.body.countInStock;
     product.description = req.body.description;
     const updatedProduct = await product.save();
+
     res.send({ message: 'Product updated', product: updatedProduct });
   } else {
     res.status(404).send({ message: 'Product Not found' });
@@ -204,7 +203,7 @@ productRouter.post('/', isAuth, isSellerOrAdmin, async (req, res) => {
     numReviews: 0,
   });
   const createdProduct = await product.save();
-  console.log("raw product in backend created");
+  console.log('raw product in backend created');
   res.send({ message: 'Product Created', product: createdProduct });
 });
 

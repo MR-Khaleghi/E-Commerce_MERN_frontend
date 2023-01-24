@@ -2,7 +2,7 @@ import expressAsyncHandler from 'express-async-handler';
 import bcrypt from 'bcrypt';
 import express from 'express';
 import User from '../models/userModel.js';
-import { generateToken, isAdmin, isAuth } from '../utils.js';
+import { generateToken, isAdmin, isAuth, isSeller } from '../utils.js';
 const userRouter = express.Router();
 
 userRouter.get(
@@ -43,11 +43,25 @@ userRouter.post(
   expressAsyncHandler(async (req, res) => {
     const userExist = await User.findOne({ email: req.body.email });
     if (!userExist) {
-      const newUser = new User({
-        name: req.body.name,
-        email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 8),
-      });
+      const newUser = req.body.isSeller
+        ? new User({
+            name: req.body.name,
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password, 8),
+            isSeller: req.body.isSeller,
+            seller: {
+              description: 'Sample',
+              logo: '/images/p1.jpg',
+              name: 'testname',
+            },
+          })
+        : new User({
+            name: req.body.name,
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password, 8),
+            isSeller: req.body.isSeller,
+          });
+
       const user = await newUser.save();
       res.send({
         _id: user._id,

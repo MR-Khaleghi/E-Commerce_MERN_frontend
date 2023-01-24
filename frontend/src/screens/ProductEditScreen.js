@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import Container from 'react-bootstrap/esm/Container';
 import Form from 'react-bootstrap/Form';
@@ -9,7 +9,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { base_URL } from '../App';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { Store } from '../Store';
 import { getError } from '../utils';
 
 const reducer = (state, action) => {
@@ -63,7 +62,7 @@ function reducerUploadImage(state, action) {
 let updateSuccessFlag = false;
 
 export default function ProductEditScreen() {
-  console.log("product edit screen");
+  console.log('product edit screen');
   let uploadSuccessFlag = false;
   let updateSuccessFlag = false;
   const navigate = useNavigate();
@@ -88,7 +87,7 @@ export default function ProductEditScreen() {
       const fetchData = async () => {
         dispatch({ type: 'FETCH_START' });
         try {
-          const result = await axios.get(base_URL+`/api/products/${id}`);
+          const result = await axios.get(base_URL + `/api/products/${id}`);
           // console.log(result);
           dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
           //   console.log(result.data);
@@ -113,7 +112,7 @@ export default function ProductEditScreen() {
     }
   }, [product]);
 
-  const {  userInfo } = useSelector(state => state.userInfo);
+  const { userInfo } = useSelector((state) => state.userInfo);
   const [{ loadingUpdate, errorUpdate, productUpdate }, updateDispatch] =
     useReducer(reducerUpdateProduct, {
       loadingUpdate: false,
@@ -125,7 +124,7 @@ export default function ProductEditScreen() {
     try {
       updateDispatch({ type: 'Update_REQUEST' });
       const { data } = await axios.put(
-        base_URL+`/api/products/${product._id}`,
+        base_URL + `/api/products/${product._id}`,
         {
           _id: id,
           name,
@@ -142,7 +141,7 @@ export default function ProductEditScreen() {
       );
       updateDispatch({ type: 'Update_SUCCESS', payload: data.product });
       updateSuccessFlag = true;
-      //   console.log(data.product);
+      console.log(data.product);
       navigate('/admin/productlist');
     } catch (err) {
       updateDispatch({ type: 'Update_FAIL', payload: getError(err) });
@@ -162,12 +161,16 @@ export default function ProductEditScreen() {
     try {
       uploadDispatch({ type: 'Upload_REQUEST' });
 
-      const { data } = await axios.post(base_URL+`/api/uploads/`, bodyFormData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          authorization: `Bearer ${userInfo.token}`,
-        },
-      });
+      const { data } = await axios.post(
+        base_URL + `/api/uploads/`,
+        bodyFormData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
       uploadDispatch({ type: 'Upload_SUCCESS', payload: data });
       uploadSuccessFlag = true;
       //   console.log(data);

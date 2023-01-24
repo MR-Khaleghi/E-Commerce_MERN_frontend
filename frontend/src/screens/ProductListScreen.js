@@ -77,9 +77,8 @@ function reducerDeleteProduct(state, action) {
 }
 
 export default function ProductListScreen(props) {
-  
   const navigate = useNavigate();
-  const {  userInfo } = useSelector(state => state.userInfo);
+  const { userInfo } = useSelector((state) => state.userInfo);
   // console.log(userInfo);
   const [{ loading, error, products }, dispatch] = useReducer(reducer, {
     loading: true,
@@ -98,9 +97,11 @@ export default function ProductListScreen(props) {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
         const seller = userInfo._id;
-        const { data } = await axios.get(base_URL+`/api/products?seller=${seller}`);
+        const { data } = await axios.get(
+          base_URL + `/api/products?seller=${seller}`
+        );
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
-        // console.log(data);
+        console.log(data);
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
@@ -119,19 +120,19 @@ export default function ProductListScreen(props) {
     try {
       createDispatch({ type: 'Create_REQUEST' });
       const { data } = await axios.post(
-        base_URL+`/api/products`,
-        {userId : userInfo._id},
+        base_URL + `/api/products`,
+        { userId: userInfo._id },
         {
           headers: { authorization: `Bearer ${userInfo.token}` },
         }
       );
       createDispatch({ type: 'Create_SUCCESS', payload: data.product });
-        console.log(data.product);
-        console.log("Raw product created and navigate to edit");
+      console.log(data.product);
+      console.log('Raw product created and navigate to edit');
       navigate(`/product/${data.product._id}/edit`);
     } catch (err) {
       createDispatch({ type: 'Create_FAIL', payload: getError(err) });
-      console.log("Raw product Error");
+      console.log('Raw product Error');
     }
   };
 
@@ -139,9 +140,12 @@ export default function ProductListScreen(props) {
     if (window.confirm('Are you sure?')) {
       try {
         deleteDispatch({ type: 'DELETE_REQUEST' });
-        const { data } = await axios.delete(base_URL+`/api/products/${product._id}`, {
-          headers: { authorization: `Bearer ${userInfo.token}` },
-        });
+        const { data } = await axios.delete(
+          base_URL + `/api/products/${product._id}`,
+          {
+            headers: { authorization: `Bearer ${userInfo.token}` },
+          }
+        );
         deleteDispatch({ type: 'DELETE_SUCCESS', payload: data });
         //   toast.error(`toast Deleted Successfully.`);
         // console.log(data);
@@ -167,8 +171,7 @@ export default function ProductListScreen(props) {
         // id="create-product-Button"
         type="button"
         className="float-end"
-        onClick={createHandler}
-      >
+        onClick={createHandler}>
         Create Product
       </Button>
       <table className="table">
@@ -194,15 +197,13 @@ export default function ProductListScreen(props) {
                 <button
                   type="button"
                   className="small"
-                  onClick={() => navigate(`/product/${product._id}/edit`)}
-                >
+                  onClick={() => navigate(`/product/${product._id}/edit`)}>
                   Edit
                 </button>
                 <button
                   type="button"
                   className="small"
-                  onClick={() => deleteHandler(product)}
-                >
+                  onClick={() => deleteHandler(product)}>
                   Delete
                 </button>
               </td>
