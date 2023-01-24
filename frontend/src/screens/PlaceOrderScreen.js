@@ -13,6 +13,8 @@ import { toast } from 'react-toastify';
 import { getError } from '../utils';
 import axios from 'axios';
 import { base_URL } from '../App';
+import { useDispatch, useSelector } from 'react-redux';
+import { CART_CLEAR } from '../store/cartSlice';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -30,42 +32,46 @@ function reducer(state, action) {
 export default function PlaceOrderScreen() {
   const [{ loading }, dispatch] = useReducer(reducer, { loading: false });
 
+  const ctxDispatch = useDispatch();
+  const { cart: { shippingAddress, paymentMethod, cartItems }} = useSelector(state => state.cart);
+  const cart = useSelector(state => state.cart);
+  
+
+  const {  userInfo } = useSelector(state => state.userInfo);
+
   const navigate = useNavigate();
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const {
-    cart: { shippingAddress, paymentMethod, cartItems },
-    userInfo,
-  } = state;
-  const { cart } = state;
+  
 
   const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100; // 123.2345 => 123.23
-  cart.itemsPrice = round2(
+  let itemsPrice = round2(
     cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
   );
 
-  cart.shippingPrice = cartItems > 100 ? round2(0) : round2(10);
-  cart.taxPrice = round2(0.15 * cart.itemsPrice);
-  cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
+  let shippingPrice = 10;
+  let taxPrice = round2(0.15 * itemsPrice);
+  let totalPrice = itemsPrice + shippingPrice + taxPrice;
 
   const placeOrderHandler = async () => {
+    console.log('placeOrderHandler');
     try {
       dispatch({ type: 'CREATE_REQUEST' });
       const { data } = await axios.post(
-        base_URL+'api/orders',
+        base_URL+'/api/orders',
         {
-          orderItems: cart.cartItems,
-          shippingAddress: cart.shippingAddress,
-          paymentMethod: cart.paymentMethod,
-          itemsPrice: cart.itemsPrice,
-          shippingPrice: cart.shippingPrice,
-          taxPrice: cart.taxPrice,
-          totalPrice: cart.totalPrice,
+          orderItems: cartItems,
+          shippingAddress: shippingAddress,
+          paymentMethod: paymentMethod,
+          itemsPrice: itemsPrice,
+          shippingPrice: shippingPrice,
+          taxPrice: taxPrice,
+          totalPrice: totalPrice,
         },
         {
           headers: { authorization: `bearer ${userInfo.token}` },
         }
       );
-      ctxDispatch({ type: 'CART_CLEAR' });
+      console.log('CREATE_SUCCESS');
+      ctxDispatch(CART_CLEAR());
       dispatch({ type: 'CREATE_SUCCESS' });
       localStorage.removeItem('cartItems');
       navigate(`/order/${data.order._id}`);
@@ -79,7 +85,7 @@ export default function PlaceOrderScreen() {
     if (!paymentMethod) {
       navigate('/payment');
     }
-  }, [cart, navigate]);
+  }, [navigate]);
   return (
     <div>
       <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
@@ -120,7 +126,7 @@ export default function PlaceOrderScreen() {
                       <Col md={6}>
                         <img
                           className="img-fluid rounded img_thumbnail"
-                          src={item.image}
+                          src={base_URL+item.image}
                           alt={item.name}
                         ></img>{' '}
                         <Link to={`/product/${item.slug}`}>{item.name}</Link>
@@ -146,25 +152,25 @@ export default function PlaceOrderScreen() {
                 <ListGroup.Item>
                   <Row>
                     <Col>Items</Col>
-                    <Col>${cart.itemsPrice.toFixed(2)}</Col>
+                    <Col>${itemsPrice.toFixed(2)}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
                     <Col>Shipping</Col>
-                    <Col>${cart.shippingPrice.toFixed(2)}</Col>
+                    <Col>${shippingPrice.toFixed(2)}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
                     <Col>Tax</Col>
-                    <Col>${cart.taxPrice.toFixed(2)}</Col>
+                    <Col>${taxPrice.toFixed(2)}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
                     <Col>Order Total</Col>
-                    <Col>${cart.totalPrice.toFixed(2)}</Col>
+                    <Col>${totalPrice.toFixed(2)}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>

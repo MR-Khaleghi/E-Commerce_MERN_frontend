@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useReducer } from 'react';
 import Button from 'react-bootstrap/esm/Button';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { base_URL } from '../App';
 import LoadingBox from '../components/LoadingBox';
@@ -78,8 +79,7 @@ function reducerDeleteProduct(state, action) {
 export default function ProductListScreen(props) {
   
   const navigate = useNavigate();
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { userInfo } = state;
+  const {  userInfo } = useSelector(state => state.userInfo);
   // console.log(userInfo);
   const [{ loading, error, products }, dispatch] = useReducer(reducer, {
     loading: true,

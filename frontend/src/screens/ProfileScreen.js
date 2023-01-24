@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, {  useEffect, useReducer, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Store } from '../Store';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/esm/Button';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { getError } from '../utils';
 import { base_URL } from '../App';
+import { useDispatch, useSelector } from 'react-redux';
+import { USER_SIGNIN } from '../store/userSlice';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -27,8 +28,8 @@ function reducer(state, action) {
 }
 
 export default function ProfileScreen() {
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { userInfo } = state;
+  
+  const {  userInfo } = useSelector(state => state.userInfo);
   const [name, setName] = useState(userInfo.name);
   const [email, setEmail] = useState(userInfo.email);
   const [password, setPassword] = useState('');
@@ -63,7 +64,7 @@ export default function ProfileScreen() {
         }
       );
       dispatch({ type: 'UPDATE_SUCCESS' });
-      ctxDispatch({ type: 'USER_SIGNIN', payload: data });
+      dispatch(USER_SIGNIN(data));
       localStorage.setItem('userInfo', JSON.stringify(data));
       toast.success('User updated successfully');
     } catch (err) {

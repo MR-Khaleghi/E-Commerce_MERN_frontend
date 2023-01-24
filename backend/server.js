@@ -9,7 +9,7 @@ import uploadRouter from './routes/uploadRoute.js';
 import path from 'path';
 import cors from 'cors';
 
-const MONGODB_URL = process.env.MONGODB_URL;
+const MONGODB_URL = process.env.MONGODB_URL || 'mongodb://localhost/amazon';
 
 console.log(`${MONGODB_URL}`);
 mongoose
@@ -29,8 +29,9 @@ app.use('/api/users', userRouter);
 app.use('/api/orders', orderRouter);
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
- console.log(path.join(__dirname, '/uploads'));
-// async-handler 
+//  console.log(path.join(__dirname, '/uploads'));
+
+// async-handler
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
 });

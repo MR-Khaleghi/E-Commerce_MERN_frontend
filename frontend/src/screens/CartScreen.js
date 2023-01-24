@@ -11,31 +11,27 @@ import MessageBox from '../components/MessageBox';
 import { Store } from '../Store';
 import axios from 'axios';
 import { base_URL } from '../App';
+import { useDispatch, useSelector } from 'react-redux';
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../store/cartSlice';
 
 function CartScreen() {
   const navigate = useNavigate();
-  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const dispatch = useDispatch();
   const {
     cart: { cartItems },
-  } = state;
+  } = useSelector((state) => state.cart);
 
   const updateCartHandler = async (item, quantity) => {
-    const { data } = await axios.get(base_URL+`/api/products/${item._id}`);
+    const { data } = await axios.get(base_URL + `/api/products/${item._id}`);
     if (data.countInStock < quantity) {
       window.alert('Sorry. product is out stock');
       return;
     }
-    ctxDispatch({
-      type: 'CART_ADD_ITEM',
-      payload: { ...item, quantity },
-    });
+    dispatch(CART_ADD_ITEM({ ...item, quantity }));
   };
 
   const removeItemHandler = (item) => {
-    ctxDispatch({
-      type: 'CART_REMOVE_ITEM',
-      payload: item,
-    });
+    dispatch(CART_REMOVE_ITEM(item));
   };
 
   const checkoutHandler = () => {
@@ -62,7 +58,7 @@ function CartScreen() {
                     <Col md={4}>
                       <img
                         className="img-fluid rounded img_thumbnail"
-                        src={item.image}
+                        src={base_URL + item.image}
                         alt={item.name}
                       ></img>{' '}
                       <Link to={`/product/${item.slug}`}>{item.name}</Link>

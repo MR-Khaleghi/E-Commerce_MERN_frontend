@@ -11,6 +11,7 @@ import MessageBox from '../components/MessageBox';
 import { Store } from '../Store';
 import { getError } from '../utils';
 import { base_URL } from '../App';
+import { useSelector } from 'react-redux';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -29,12 +30,9 @@ export default function OrderScreen() {
   const params = useParams();
   const { id: orderId } = params;
   const navigate = useNavigate();
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const {
-    cart: { shippingAddress },
-    userInfo,
-  } = state;
-
+  const { cart: { shippingAddress}} = useSelector(state => state.cart);
+  const {  userInfo } = useSelector(state => state.userInfo);
+   
   const [{ loading, error, order }, dispatch] = useReducer(reducer, {
     loading: true,
     order: {},
@@ -118,7 +116,7 @@ export default function OrderScreen() {
                       <Col md={6}>
                         <img
                           className="img-fluid rounded img_thumbnail"
-                          src={item.image}
+                          src={base_URL+item.image}
                           alt={item.name}
                         ></img>{' '}
                         <Link to={`/product/${item.slug}`}>{item.name}</Link>

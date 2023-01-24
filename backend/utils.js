@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import './config.js';
 
 const JWT_SECRET = process.env.JWT_SECRET;
+// const JWT_SECRET = 'myAuth';
 export const generateToken = (user) => {
   // console.log(JWT_SECRET);
   // console.log(process.env.JWT_SECRET);

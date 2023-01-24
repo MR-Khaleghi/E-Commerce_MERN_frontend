@@ -3,20 +3,20 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Rating from './Rating';
 import axios from 'axios';
-import { useContext } from 'react';
-import { Store } from '../Store';
 import Row from 'react-bootstrap/esm/Row';
 import { base_URL } from '../App';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { CART_ADD_ITEM } from '../store/cartSlice';
 function Product(props) {
   const { product } = props;
   console.log(product);
   // console.log(product.seller.seller.name);
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const {
-    cart: { cartItems },
-    userInfo,
-  } = state;
+  const dispatch = useDispatch();
+  const { cart : {cartItems}} = useSelector(state => state.cart);
+  
+
+ 
+  
 
   const addToCartHandler = async (item) => {
     const existItem = cartItems.find((x) => x._id === product._id);
@@ -27,16 +27,14 @@ function Product(props) {
       window.alert('Sorry. product is out stock');
       return;
     }
-    ctxDispatch({
-      type: 'CART_ADD_ITEM',
-      payload: { ...item, quantity },
-    });
+    dispatch(CART_ADD_ITEM({ ...item, quantity }));
+    
   };
 
   return product ? (
     <Card>
       <Link to={`/product/${product.slug}`}>
-        <img src={product.image} className="card-img-top" alt={product.name} />
+        <img src={base_URL+product.image} className="card-img-top" alt={product.name} />
       </Link>
       <Card.Body>
         <Link to={`/product/${product.slug}`}>

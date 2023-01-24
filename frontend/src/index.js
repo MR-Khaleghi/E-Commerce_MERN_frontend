@@ -4,7 +4,8 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import { HelmetProvider } from 'react-helmet-async';
-import { StoreProvider } from './Store';
+import {Provider} from 'react-redux';
+import {Store} from "./Store";
 
 // ReactDOM.render(
 // //   <React.StrictMode>
@@ -15,10 +16,10 @@ import { StoreProvider } from './Store';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <StoreProvider>
+    <Provider store = {Store}>
       <HelmetProvider>
         <App />
       </HelmetProvider>
-    </StoreProvider>
+    </Provider>
   </React.StrictMode>
 );

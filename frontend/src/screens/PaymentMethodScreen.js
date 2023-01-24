@@ -6,14 +6,15 @@ import CheckoutSteps from '../components/CheckoutSteps';
 import Button from 'react-bootstrap/esm/Button';
 import { Store } from '../Store';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { SAVE_PAYMENT_METHOD } from '../store/cartSlice';
 
 export default function PaymentMethodScreen() {
   const navigate = useNavigate();
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const {
-    cart: { shippingAddress, paymentMethod },
-  } = state;
+  const dispatch = useDispatch();
+  const { cart: { shippingAddress, paymentMethod }} = useSelector(state => state.cart);
 
+  
   const [paymentMethodName, setPaymentMethod] = useState(
     paymentMethod || 'PayPal'
   );
@@ -25,7 +26,7 @@ export default function PaymentMethodScreen() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    ctxDispatch({ type: 'SAVE_PAYMENT_METHOD', payload: paymentMethodName });
+    dispatch(SAVE_PAYMENT_METHOD( paymentMethodName ));
     localStorage.setItem('paymentMethod', JSON.stringify(paymentMethodName));
     navigate('/placeorder');
   };

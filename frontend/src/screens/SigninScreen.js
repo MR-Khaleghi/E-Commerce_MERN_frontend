@@ -1,13 +1,14 @@
 import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import Container from 'react-bootstrap/esm/Container';
 import Form from 'react-bootstrap/Form';
 import { Helmet } from 'react-helmet-async';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { base_URL } from '../App';
-import { Store } from '../Store';
+import { USER_SIGNIN } from '../store/userSlice';
 import { getError } from '../utils';
 
 export default function SigninScreen() {
@@ -17,21 +18,21 @@ export default function SigninScreen() {
   const redirect = redirectInUrl ? redirectInUrl : '/';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { userInfo } = state;
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.userInfo);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
       console.log('fired');
-      const { data } = await axios.post(base_URL+'/api/users/signin', {
+      const { data } = await axios.post(base_URL + '/api/users/signin', {
         email,
         password,
       });
-      ctxDispatch({ type: 'USER_SIGNIN', payload: data });
+      dispatch(USER_SIGNIN(data));
       localStorage.setItem('userInfo', JSON.stringify(data));
       navigate(redirect || '/');
-      console.log(data);
+      // console.log(data);
     } catch (err) {
       toast.error(getError(err));
       // alert('Invalid Email or password!');

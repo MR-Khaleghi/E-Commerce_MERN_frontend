@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useReducer } from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import { Helmet } from 'react-helmet-async';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { base_URL } from '../App';
 import LoadingBox from '../components/LoadingBox';
@@ -42,8 +43,7 @@ function reducerDeleteOrder(state, action) {
 
 export default function OrderListScreen() {
   const navigate = useNavigate();
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { userInfo } = state;
+  const {  userInfo } = useSelector(state => state.userInfo);
   const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
     loading: true,
     order: {},

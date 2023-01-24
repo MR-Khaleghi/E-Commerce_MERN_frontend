@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useReducer } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { base_URL } from '../App';
@@ -41,8 +42,7 @@ function reducerDeleteUser(state, action) {
 
 export default function UserListScreen() {
   const navigate = useNavigate();
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { userInfo } = state;
+  const {  userInfo } = useSelector(state => state.userInfo);
   const [{ loading, error, users }, dispatch] = useReducer(reducer, {
     loading: true,
     error: '',

@@ -5,14 +5,15 @@ import Button from 'react-bootstrap/esm/Button';
 import { Store } from '../Store';
 import { useNavigate } from 'react-router-dom';
 import CheckoutSteps from '../components/CheckoutSteps';
+import { useDispatch, useSelector } from 'react-redux';
+import { SAVE_SHIPPING_ADDRESS } from '../store/cartSlice';
 
 export default function ShippingAddressScreen() {
   const navigate = useNavigate();
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const {
-    userInfo,
-    cart: { shippingAddress },
-  } = state;
+  const dispatch = useDispatch();
+  const { cart: { shippingAddress }} = useSelector(state => state.cart);
+  const {  userInfo } = useSelector(state => state.userInfo);
+  
   const [fullName, setFullName] = useState(shippingAddress.fullName || '');
   const [address, setAddress] = useState(shippingAddress.address || '');
   const [city, setCity] = useState(shippingAddress.city || '');
@@ -28,16 +29,13 @@ export default function ShippingAddressScreen() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    ctxDispatch({
-      type: 'SAVE_SHIPPING_ADDRESS',
-      payload: {
-        fullName,
+    dispatch(SAVE_SHIPPING_ADDRESS(
+        {fullName,
         address,
         city,
         postalCode,
-        country,
-      },
-    });
+        country,}
+    ));
     localStorage.setItem(
       'shippingAddress',
       JSON.stringify({

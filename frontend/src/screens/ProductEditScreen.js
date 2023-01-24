@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/esm/Button';
 import Container from 'react-bootstrap/esm/Container';
 import Form from 'react-bootstrap/Form';
 import { Helmet } from 'react-helmet-async';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { base_URL } from '../App';
 import LoadingBox from '../components/LoadingBox';
@@ -112,8 +113,7 @@ export default function ProductEditScreen() {
     }
   }, [product]);
 
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { userInfo } = state;
+  const {  userInfo } = useSelector(state => state.userInfo);
   const [{ loadingUpdate, errorUpdate, productUpdate }, updateDispatch] =
     useReducer(reducerUpdateProduct, {
       loadingUpdate: false,

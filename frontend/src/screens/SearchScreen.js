@@ -73,6 +73,7 @@ export default function SearchScreen() {
   const navigate = useNavigate();
   const { search } = useLocation();
   const sp = new URLSearchParams(search); // /search?category=Shirts
+  // console.log(sp.get('category'));
   const category = sp.get('category') || 'all'; // Shirts
   const query = sp.get('query') || 'all';
   const price = sp.get('price') || 'all';

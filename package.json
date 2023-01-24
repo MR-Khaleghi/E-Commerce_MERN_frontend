@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "Commerce_MERN_all",
   "version": "1.0.0",
   "description": "Demo ",
@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/MR-Khaleghi/E-Commerce_MERN_all/issues"
   },
-  "homepage": "https://github.com/MR-Khaleghi/E-Commerce_MERN_all#readme"
+  "homepage": "https://github.com/MR-Khaleghi/E-Commerce_MERN_all#readme",
+  "devDependencies": {
+    "prettier": "^2.8.3"
+  }
 }

@@ -13,6 +13,7 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Product from '../components/Product';
 import { base_URL } from '../App';
+import { useSelector } from 'react-redux';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -49,8 +50,7 @@ export default function SellerScreen() {
   const params = useParams();
   const { id: sellerId } = params;
   // console.log(sellerId);
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { userInfo } = state;
+  const {  userInfo } = useSelector(state => state.userInfo);
 
   const [{ loading, error, products }, dispatch] = useReducer(reducer, {
     loading: false,

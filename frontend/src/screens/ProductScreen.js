@@ -13,9 +13,9 @@ import { Helmet } from 'react-helmet-async';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { getError } from '../utils';
-import { Store } from '../Store';
-import { toast } from 'react-toastify';
 import { base_URL } from '../App';
+import { useSelector, useDispatch } from 'react-redux';
+import { CART_ADD_ITEM } from '../store/cartSlice';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -61,7 +61,7 @@ function ProductScreen() {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_START' });
       try {
-        const result = await axios.get(base_URL+`/api/products/slug/${slug}`);
+        const result = await axios.get(base_URL + `/api/products/slug/${slug}`);
         // console.log(result);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
         // setProducts(result.data);
@@ -74,20 +74,19 @@ function ProductScreen() {
     fetchData();
   }, []);
 
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { cart, userInfo } = state;
+  const ctxDispatch = useDispatch();
+  const { cart } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.userInfo);
+
   const addToCartHandler = async () => {
     const existItem = cart.cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(base_URL+`/api/products/${product._id}`);
+    const { data } = await axios.get(base_URL + `/api/products/${product._id}`);
     if (data.countInStock < quantity) {
       window.alert('Sorry. product is out stock');
       return;
     }
-    ctxDispatch({
-      type: 'CART_ADD_ITEM',
-      payload: { ...product, quantity },
-    });
+    ctxDispatch(CART_ADD_ITEM({ ...product, quantity }));
     navigate('/cart');
   };
 
@@ -110,7 +109,7 @@ function ProductScreen() {
       try {
         reviewDispatch({ type: 'REVIEW_START' });
         const { data } = await axios.post(
-          base_URL+`/api/products/${product._id}/reviews`,
+          base_URL + `/api/products/${product._id}/reviews`,
           { rating, comment, name: userInfo.name }, // review
           {
             headers: { authorization: `Bearer ${userInfo.token}` },
@@ -143,7 +142,11 @@ function ProductScreen() {
     <div>
       <Row>
         <Col md={6}>
-          <img className="img-large" src={product.image} alt={product.name} />
+          <img
+            className="img-large"
+            src={base_URL + product.image}
+            alt={product.name}
+          />
         </Col>
         <Col md={3}>
           <ListGroup variant="flush">
@@ -156,8 +159,7 @@ function ProductScreen() {
             <ListGroup.Item>
               <Rating
                 rating={product.rating}
-                numReviews={product.numReviews}
-              ></Rating>
+                numReviews={product.numReviews}></Rating>
             </ListGroup.Item>
             <ListGroup.Item>Price : ${product.price}</ListGroup.Item>
             <ListGroup.Item>
@@ -179,8 +181,7 @@ function ProductScreen() {
                   </h4>
                   <Rating
                     rating={product.seller.seller.rating}
-                    numReviews={product.seller.seller.numReviews}
-                  ></Rating>
+                    numReviews={product.seller.seller.numReviews}></Rating>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
@@ -238,8 +239,7 @@ function ProductScreen() {
                     <select
                       id="rating"
                       value={rating}
-                      onChange={(e) => setRating(e.target.value)}
-                    >
+                      onChange={(e) => setRating(e.target.value)}>
                       <option value="">Select...</option>
                       <option value="1">1- Poor</option>
                       <option value="2">2- Fair</option>
