@@ -30,7 +30,7 @@ import SellerScreen from './screens/SellerScreen';
 import { useSelector } from 'react-redux';
 import NavBar from './components/Navbar';
 
-const dev = true;
+const dev = false;
 export const base_URL = dev
   ? 'http://localhost:10000'
   : `https://ecommerce-mern-backend.onrender.com`;
@@ -47,7 +47,7 @@ function App() {
   }
 
   const sidebarCallback = (sidebarIsOpen) => {
-    setSidebarIsOpen(sidebarIsOpen);
+    setSidebarIsOpen(!sidebarIsOpen);
   };
 
   return (
@@ -59,9 +59,8 @@ function App() {
             : 'd-flex flex-column site-container'
         }>
         <ToastContainer position="bottom-center" limit={1} />
-        <header>
-          <NavBar sidebarOnclick={sidebarCallback} />
-        </header>
+
+        <NavBar sidebarOnclick={sidebarCallback} />
 
         {/* NavBar */}
 

@@ -53,7 +53,7 @@ const NavBar = (props) => {
     fetchCategories();
   }, []);
   return (
-    <div>
+    <>
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
           {/* sidebar button*/}
@@ -154,7 +154,7 @@ const NavBar = (props) => {
           ))}
         </Nav>
       </div>
-    </div>
+    </>
   );
 };
 
