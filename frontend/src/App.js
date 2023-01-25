@@ -30,7 +30,7 @@ import SellerScreen from './screens/SellerScreen';
 import { useSelector } from 'react-redux';
 import NavBar from './components/Navbar';
 
-const dev = false;
+const dev = true;
 export const base_URL = dev
   ? 'http://localhost:10000'
   : `https://ecommerce-mern-backend.onrender.com`;
@@ -66,99 +66,101 @@ function App() {
         {/* NavBar */}
 
         <main>
-          <Routes>
-            <Route path="/" element={<HomeScreen />} />
-            <Route path="/cart" element={<CartScreen />} />
-            <Route path="/signin" element={<SigninScreen />} />
-            <Route path="/shipping" element={<ShippingAddressScreen />} />
-            <Route path="/signup" element={<SignupScreen />} />
-            <Route path="/payment" element={<PaymentMethodScreen />} />
-            <Route path="/placeorder" element={<PlaceOrderScreen />} />
-            <Route path="/product/:slug" element={<ProductScreen />} />
-            <Route
-              path="/product/:id/edit"
-              element={<ProductEditScreen />}
-              exact
-            />
-            <Route path="/seller/:id" element={<SellerScreen />} exact />
-            <Route
-              path="/order/:id"
-              element={
-                <ProtectedRoute>
-                  <OrderScreen />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/orderhistory"
-              element={
-                <ProtectedRoute>
-                  <OrderHistoryScreen />
-                </ProtectedRoute>
-              }
-            />
+          <Container>
+            <Routes>
+              <Route path="/" element={<HomeScreen />} />
+              <Route path="/cart" element={<CartScreen />} />
+              <Route path="/signin" element={<SigninScreen />} />
+              <Route path="/shipping" element={<ShippingAddressScreen />} />
+              <Route path="/signup" element={<SignupScreen />} />
+              <Route path="/payment" element={<PaymentMethodScreen />} />
+              <Route path="/placeorder" element={<PlaceOrderScreen />} />
+              <Route path="/product/:slug" element={<ProductScreen />} />
+              <Route
+                path="/product/:id/edit"
+                element={<ProductEditScreen />}
+                exact
+              />
+              <Route path="/seller/:id" element={<SellerScreen />} exact />
+              <Route
+                path="/order/:id"
+                element={
+                  <ProtectedRoute>
+                    <OrderScreen />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/orderhistory"
+                element={
+                  <ProtectedRoute>
+                    <OrderHistoryScreen />
+                  </ProtectedRoute>
+                }
+              />
 
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <ProfileScreen />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/search" element={<SearchScreen />} />
-            {/* Admin Routes */}
-            <Route
-              path="/admin/dashboard"
-              element={
-                <AdminRoute>
-                  <DashboardScreen />
-                </AdminRoute>
-              }
-            />
-            <Route
-              path="/admin/userlist"
-              element={
-                <AdminRoute>
-                  <UserListScreen />
-                </AdminRoute>
-              }
-            />
-            <Route
-              path="/admin/productlist"
-              element={
-                <AdminRoute>
-                  <ProductListScreen />
-                </AdminRoute>
-              }
-            />
-            <Route
-              path="/admin/orderlist"
-              element={
-                <AdminRoute>
-                  <OrderListScreen />
-                </AdminRoute>
-              }
-            />
-            {/* Seller Routes */}
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <ProfileScreen />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/search" element={<SearchScreen />} />
+              {/* Admin Routes */}
+              <Route
+                path="/admin/dashboard"
+                element={
+                  <AdminRoute>
+                    <DashboardScreen />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/userlist"
+                element={
+                  <AdminRoute>
+                    <UserListScreen />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/productlist"
+                element={
+                  <AdminRoute>
+                    <ProductListScreen />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/orderlist"
+                element={
+                  <AdminRoute>
+                    <OrderListScreen />
+                  </AdminRoute>
+                }
+              />
+              {/* Seller Routes */}
 
-            <Route
-              path="/productlist/seller"
-              element={
-                <SellerRoute>
-                  <ProductListScreen />
-                </SellerRoute>
-              }
-            />
-            <Route
-              path="/orderlist/seller"
-              element={
-                <SellerRoute>
-                  <OrderListScreen />
-                </SellerRoute>
-              }
-            />
-          </Routes>
+              <Route
+                path="/productlist/seller"
+                element={
+                  <SellerRoute>
+                    <ProductListScreen />
+                  </SellerRoute>
+                }
+              />
+              <Route
+                path="/orderlist/seller"
+                element={
+                  <SellerRoute>
+                    <OrderListScreen />
+                  </SellerRoute>
+                }
+              />
+            </Routes>
+          </Container>
         </main>
         <footer>
           <div className="text-center">All rights reserved</div>

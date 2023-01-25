@@ -35,7 +35,8 @@ function CartScreen() {
   };
 
   const checkoutHandler = () => {
-    navigate('/signin?redirect=/shipping');
+    navigate('/shipping');
+    // navigate('/signin?redirect=/shipping');
   };
 
   return (
@@ -59,8 +60,7 @@ function CartScreen() {
                       <img
                         className="img-fluid rounded img_thumbnail"
                         src={base_URL + item.image}
-                        alt={item.name}
-                      ></img>{' '}
+                        alt={item.name}></img>{' '}
                       <Link to={`/product/${item.slug}`}>{item.name}</Link>
                     </Col>
                     <Col md={3}>
@@ -69,8 +69,7 @@ function CartScreen() {
                           updateCartHandler(item, item.quantity - 1)
                         }
                         variant="light"
-                        disabled={item.quantity === 1}
-                      >
+                        disabled={item.quantity === 1}>
                         <i className="fas fa-minus-circle"></i>
                       </Button>{' '}
                       <span>{item.quantity}</span>{' '}
@@ -79,8 +78,7 @@ function CartScreen() {
                           updateCartHandler(item, item.quantity + 1)
                         }
                         variant="light"
-                        disabled={item.quantity === item.countInStock}
-                      >
+                        disabled={item.quantity === item.countInStock}>
                         <i className="fas fa-plus-circle"></i>
                       </Button>
                     </Col>
@@ -88,8 +86,7 @@ function CartScreen() {
                     <Col md={2}>
                       <Button
                         onClick={() => removeItemHandler(item)}
-                        variant="light"
-                      >
+                        variant="light">
                         <i className="fas fa-trash"></i>
                       </Button>
                     </Col>
@@ -116,8 +113,7 @@ function CartScreen() {
                       type="button"
                       onClick={checkoutHandler}
                       variant="primary"
-                      disabled={cartItems.length === 0}
-                    >
+                      disabled={cartItems.length === 0}>
                       Proceed To Checkout
                     </Button>
                   </div>
