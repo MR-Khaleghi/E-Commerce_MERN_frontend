@@ -13,9 +13,13 @@ import { getError } from '../utils';
 
 export default function SigninScreen() {
   const navigate = useNavigate();
-  const { search } = useLocation();
-  const redirectInUrl = new URLSearchParams(search).get('redirect');
-  const redirect = redirectInUrl ? redirectInUrl : '/';
+  // const { search } = useLocation();
+  // console.log(search);
+  // const redirectInUrl = new URLSearchParams(search).get('redirect');
+  // console.log(redirectInUrl);
+  // const redirect = redirectInUrl ? redirectInUrl : '/';
+  const redirect = '/';
+  console.log(redirect);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
@@ -31,7 +35,7 @@ export default function SigninScreen() {
       });
       dispatch(USER_SIGNIN(data));
       localStorage.setItem('userInfo', JSON.stringify(data));
-      navigate(redirect || '/');
+      navigate('/');
       // console.log(data);
     } catch (err) {
       toast.error(getError(err));
@@ -41,44 +45,48 @@ export default function SigninScreen() {
 
   useEffect(() => {
     if (userInfo) {
-      navigate(redirect);
+      navigate('/');
     }
-  }, [navigate, redirect, userInfo]);
+  }, [userInfo]);
+  if (userInfo) {
+    navigate('/');
+  } else {
+    return (
+      <Container className="small-container">
+        <Helmet>
+          <title>Sign In</title>
+        </Helmet>
+        <h1 className="my-3"> Sing In</h1>
+        <Form onSubmit={submitHandler}>
+          <Form.Group className="mb-3" controlId="email">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="email"
+              required
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Form.Group>
 
-  return (
-    <Container className="small-container">
-      <Helmet>
-        <title>Sign In</title>
-      </Helmet>
-      <h1 className="my-3"> Sing In</h1>
-      <Form onSubmit={submitHandler}>
-        <Form.Group className="mb-3" controlId="email">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            required
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            required
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
-        <div className="mb-3">
-          <Button variant="primary" type="submit">
-            Sign In
-          </Button>
-        </div>
-        <div className="mb-3">
-          New Customer?{' '}
-          <Link to={`/signup?redirect=${redirect}`}>Create your account</Link>
-        </div>
-      </Form>
-    </Container>
-  );
+          <Form.Group className="mb-3" controlId="password">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              required
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Group>
+          <div className="mb-3">
+            <Button variant="primary" type="submit">
+              Sign In
+            </Button>
+          </div>
+          <div className="mb-3">
+            New Customer?{' '}
+            {/* <Link to={`/signup?redirect=${redirect}`}>Create your account</Link> */}
+            <Link to={`/signup`}>Create your account</Link>
+          </div>
+        </Form>
+      </Container>
+    );
+  }
 }

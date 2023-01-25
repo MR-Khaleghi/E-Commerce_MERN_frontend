@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -17,6 +17,7 @@ import axios from 'axios';
 import { base_URL } from '../App';
 
 const NavBar = (props) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const { cart } = useSelector((state) => state.cart);
@@ -29,11 +30,14 @@ const NavBar = (props) => {
 
   const signoutHandler = () => {
     console.log('signout fired');
-    dispatch(USER_SIGNOUT);
+
     localStorage.removeItem('userInfo');
     localStorage.removeItem('shippingAddress');
     localStorage.removeItem('paymentMethod');
-    window.location.href = '/signin';
+    dispatch(USER_SIGNOUT);
+    // navigate('/signin', { replace: true });
+    // window.location.href('/signin');
+    // navigate('/signin', { replace: true });
   };
   const [categories, setCategories] = useState([]);
   useEffect(() => {
@@ -82,12 +86,12 @@ const NavBar = (props) => {
                     <NavDropdown.Item>Order History</NavDropdown.Item>
                   </LinkContainer>
                   <NavDropdown.Divider />
-                  <Link
-                    to="#signout"
+                  <a
+                    href="/"
                     className="dropdown-item"
                     onClick={signoutHandler}>
                     Sign Out
-                  </Link>
+                  </a>
                 </NavDropdown>
               ) : (
                 <Link to="/signin" className="nav-link">

@@ -14,9 +14,13 @@ import { getError } from '../utils';
 
 export default function SignupScreen() {
   const navigate = useNavigate();
-  const { search } = useLocation();
-  const redirectInUrl = new URLSearchParams(search).get('redirect');
-  const redirect = redirectInUrl ? redirectInUrl : '/';
+  // const { search } = useLocation();
+  // console.log(search);
+  // const redirectInUrl = new URLSearchParams(search).get('redirect');
+  // console.log(redirectInUrl);
+  // const redirect = redirectInUrl ? redirectInUrl : '/';
+  const redirect = '/';
+  console.log(redirect);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -52,8 +56,8 @@ export default function SignupScreen() {
   useEffect(() => {
     if (userInfo) {
       navigate(redirect);
-    }
-  }, [navigate, redirect, userInfo]);
+    } else navigate(`/signup`);
+  }, [userInfo]);
 
   return (
     <Container className="small-container">
@@ -105,7 +109,8 @@ export default function SignupScreen() {
         </div>
         <div className="mb-3">
           Already have an account?{' '}
-          <Link to={`/signin?redirect=${redirect}`}>Sign-In</Link>
+          {/* <Link to={`/signin?redirect=${redirect}`}>Sign-In</Link> */}
+          <Link to={`/signin`}>Sign-In</Link>
         </div>
       </Form>
     </Container>

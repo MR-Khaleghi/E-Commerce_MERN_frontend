@@ -66,103 +66,99 @@ function App() {
         {/* NavBar */}
 
         <main>
-          <Container className="mt-3">
-            <Routes>
-              <Route path="/" element={<HomeScreen />} />
+          <Routes>
+            <Route path="/" element={<HomeScreen />} />
+            <Route path="/cart" element={<CartScreen />} />
+            <Route path="/signin" element={<SigninScreen />} />
+            <Route path="/shipping" element={<ShippingAddressScreen />} />
+            <Route path="/signup" element={<SignupScreen />} />
+            <Route path="/payment" element={<PaymentMethodScreen />} />
+            <Route path="/placeorder" element={<PlaceOrderScreen />} />
+            <Route path="/product/:slug" element={<ProductScreen />} />
+            <Route
+              path="/product/:id/edit"
+              element={<ProductEditScreen />}
+              exact
+            />
+            <Route path="/seller/:id" element={<SellerScreen />} exact />
+            <Route
+              path="/order/:id"
+              element={
+                <ProtectedRoute>
+                  <OrderScreen />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/orderhistory"
+              element={
+                <ProtectedRoute>
+                  <OrderHistoryScreen />
+                </ProtectedRoute>
+              }
+            />
 
-              <Route path="/product/:slug" element={<ProductScreen />} />
-              <Route
-                path="/product/:id/edit"
-                element={<ProductEditScreen />}
-                exact
-              />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <ProfileScreen />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/search" element={<SearchScreen />} />
+            {/* Admin Routes */}
+            <Route
+              path="/admin/dashboard"
+              element={
+                <AdminRoute>
+                  <DashboardScreen />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/userlist"
+              element={
+                <AdminRoute>
+                  <UserListScreen />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/productlist"
+              element={
+                <AdminRoute>
+                  <ProductListScreen />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/orderlist"
+              element={
+                <AdminRoute>
+                  <OrderListScreen />
+                </AdminRoute>
+              }
+            />
+            {/* Seller Routes */}
 
-              <Route path="/cart" element={<CartScreen />} />
-              <Route path="/signin" element={<SigninScreen />} />
-              <Route path="/shipping" element={<ShippingAddressScreen />} />
-              <Route path="/signup" element={<SignupScreen />} />
-              <Route path="/payment" element={<PaymentMethodScreen />} />
-              <Route path="/placeorder" element={<PlaceOrderScreen />} />
-              <Route path="/seller/:id" element={<SellerScreen />} exact />
-              <Route
-                path="/order/:id"
-                element={
-                  <ProtectedRoute>
-                    <OrderScreen />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/orderhistory"
-                element={
-                  <ProtectedRoute>
-                    <OrderHistoryScreen />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/profile"
-                element={
-                  <ProtectedRoute>
-                    <ProfileScreen />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="/search" element={<SearchScreen />} />
-              {/* Admin Routes */}
-              <Route
-                path="/admin/dashboard"
-                element={
-                  <AdminRoute>
-                    <DashboardScreen />
-                  </AdminRoute>
-                }
-              />
-              <Route
-                path="/admin/userlist"
-                element={
-                  <AdminRoute>
-                    <UserListScreen />
-                  </AdminRoute>
-                }
-              />
-              <Route
-                path="/admin/productlist"
-                element={
-                  <AdminRoute>
-                    <ProductListScreen />
-                  </AdminRoute>
-                }
-              />
-              <Route
-                path="/admin/orderlist"
-                element={
-                  <AdminRoute>
-                    <OrderListScreen />
-                  </AdminRoute>
-                }
-              />
-              {/* Seller Routes */}
-
-              <Route
-                path="/productlist/seller"
-                element={
-                  <SellerRoute>
-                    <ProductListScreen />
-                  </SellerRoute>
-                }
-              />
-              <Route
-                path="/orderlist/seller"
-                element={
-                  <SellerRoute>
-                    <OrderListScreen />
-                  </SellerRoute>
-                }
-              />
-            </Routes>
-          </Container>
+            <Route
+              path="/productlist/seller"
+              element={
+                <SellerRoute>
+                  <ProductListScreen />
+                </SellerRoute>
+              }
+            />
+            <Route
+              path="/orderlist/seller"
+              element={
+                <SellerRoute>
+                  <OrderListScreen />
+                </SellerRoute>
+              }
+            />
+          </Routes>
         </main>
         <footer>
           <div className="text-center">All rights reserved</div>
