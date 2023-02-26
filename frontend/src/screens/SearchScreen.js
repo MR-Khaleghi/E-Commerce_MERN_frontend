@@ -92,7 +92,8 @@ export default function SearchScreen() {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
         const { data } = await axios.get(
-          base_URL+`/api/products/search?page=${page}&query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`
+          base_URL +
+            `/api/products/search?page=${page}&query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`
         );
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {
@@ -107,7 +108,7 @@ export default function SearchScreen() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get(base_URL+`/api/products/categories`);
+        const { data } = await axios.get(base_URL + `/api/products/categories`);
         setCategories(data);
       } catch (err) {
         toast.error(getError(err));
@@ -124,12 +125,8 @@ export default function SearchScreen() {
     const filterPrice = filter.price || price;
     const filterOrder = filter.order || order;
     const search = `?page=${filterPage}&query=${filterQuery}&category=${filterCategory}&price=${filterPrice}&rating=${filterRating}&order=${filterOrder}`;
-    const hash = "";
-    return (
-      {pathname: "/search",
-       search,
-       hash,
-      });
+    const hash = '';
+    return { pathname: '/search', search, hash };
   };
   return (
     <div>
@@ -144,8 +141,7 @@ export default function SearchScreen() {
               <li>
                 <Link
                   className={'all' === category ? 'text-bold' : ''}
-                  to={getFilterUrl({ category: 'all' })}
-                >
+                  to={getFilterUrl({ category: 'all' })}>
                   Any
                 </Link>
               </li>
@@ -153,8 +149,7 @@ export default function SearchScreen() {
                 <li key={c}>
                   <Link
                     className={c === category ? 'text-bold' : ''}
-                    to={getFilterUrl({ category: c })}
-                  >
+                    to={getFilterUrl({ category: c })}>
                     {c}
                   </Link>
                 </li>
@@ -167,8 +162,7 @@ export default function SearchScreen() {
               <li>
                 <Link
                   className={'all' === price ? 'text-bold' : ''}
-                  to={getFilterUrl({ price: 'all' })}
-                >
+                  to={getFilterUrl({ price: 'all' })}>
                   Any
                 </Link>
               </li>
@@ -176,8 +170,7 @@ export default function SearchScreen() {
                 <li key={p.value}>
                   <Link
                     to={getFilterUrl({ price: p.value })}
-                    className={p.value === price ? 'text-bold' : ''}
-                  >
+                    className={p.value === price ? 'text-bold' : ''}>
                     {p.name}
                   </Link>
                 </li>
@@ -191,8 +184,7 @@ export default function SearchScreen() {
                 <li key={r.name}>
                   <Link
                     className={`${r.rating}` === `${rating}` ? 'text-bold' : ''}
-                    to={getFilterUrl({ rating: r.rating })}
-                  >
+                    to={getFilterUrl({ rating: r.rating })}>
                     <Rating caption={' & up'} rating={r.rating}></Rating>
                   </Link>
                 </li>
@@ -200,8 +192,7 @@ export default function SearchScreen() {
 
               <Link
                 className={'all' === rating ? 'text-bold' : ''}
-                to={getFilterUrl({ rating: 'all' })}
-              >
+                to={getFilterUrl({ rating: 'all' })}>
                 <Rating caption={' & up'} rating={0}></Rating>
               </Link>
             </ul>
@@ -228,8 +219,7 @@ export default function SearchScreen() {
                     price !== 'all' ? (
                       <Button
                         variant="light"
-                        onClick={() => navigate('/search')}
-                      >
+                        onClick={() => navigate('/search')}>
                         <i className="fas fa-times-circle"></i>
                       </Button>
                     ) : null}
@@ -241,8 +231,7 @@ export default function SearchScreen() {
                     value={order}
                     onChange={(e) => {
                       navigate(getFilterUrl({ order: e.target.value }));
-                    }}
-                  >
+                    }}>
                     <option value="newest">Newest Arrivals</option>
                     <option value="lowest">Price: Low to High</option>
                     <option value="highest">Price: High to Low</option>
@@ -267,12 +256,10 @@ export default function SearchScreen() {
                   <LinkContainer
                     key={x + 1}
                     className="mx-1"
-                    to={getFilterUrl({ page: x + 1 })}
-                  >
+                    to={getFilterUrl({ page: x + 1 })}>
                     <Button
                       className={Number(page) === x + 1 ? 'text-bold' : ''}
-                      variant="light"
-                    >
+                      variant="light">
                       {x + 1}
                     </Button>
                   </LinkContainer>

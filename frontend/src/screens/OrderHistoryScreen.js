@@ -25,7 +25,7 @@ function reducer(state, action) {
 
 export default function OrderHistoryScreen() {
   const navigate = useNavigate();
-  const {  userInfo } = useSelector(state => state.userInfo);;
+  const { userInfo } = useSelector((state) => state.userInfo);
   const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
     loading: true,
     error: '',
@@ -35,7 +35,7 @@ export default function OrderHistoryScreen() {
     const fetchData = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-        const { data } = await axios.get(base_URL+`/api/orders/mine`, {
+        const { data } = await axios.get(base_URL + `/api/orders/mine`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
@@ -86,8 +86,7 @@ export default function OrderHistoryScreen() {
                   <Button
                     type="button"
                     variant="light"
-                    onClick={() => navigate(`/order/${order._id}`)}
-                  >
+                    onClick={() => navigate(`/order/${order._id}`)}>
                     Details
                   </Button>
                 </td>

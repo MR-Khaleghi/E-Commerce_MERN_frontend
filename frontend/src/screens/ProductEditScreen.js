@@ -142,7 +142,11 @@ export default function ProductEditScreen() {
       updateDispatch({ type: 'Update_SUCCESS', payload: data.product });
       updateSuccessFlag = true;
       console.log(data.product);
-      navigate('/admin/productlist');
+      if (userInfo.isAdmin) {
+        navigate('/admin/productlist');
+      } else if (userInfo.isSeller) {
+        navigate('/productlist/seller');
+      }
     } catch (err) {
       updateDispatch({ type: 'Update_FAIL', payload: getError(err) });
     }

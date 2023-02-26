@@ -50,7 +50,7 @@ export default function SellerScreen() {
   const params = useParams();
   const { id: sellerId } = params;
   // console.log(sellerId);
-  const {  userInfo } = useSelector(state => state.userInfo);
+  const { userInfo } = useSelector((state) => state.userInfo);
 
   const [{ loading, error, products }, dispatch] = useReducer(reducer, {
     loading: false,
@@ -71,7 +71,9 @@ export default function SellerScreen() {
       // console.log('product fired');
       dispatch({ type: 'FETCH_START' });
       try {
-        const result = await axios.get(base_URL+`/api/products?seller=${sellerId}`);
+        const result = await axios.get(
+          base_URL + `/api/products?seller=${sellerId}`
+        );
         // console.log(result);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
         // console.log(result.data);
@@ -87,7 +89,10 @@ export default function SellerScreen() {
       try {
         // console.log('user fired');
         dispatchSeller({ type: 'USER_FETCH_REQUEST' });
-        const { data } = await axios.get(base_URL+`/api/users/${sellerId}`, {});
+        const { data } = await axios.get(
+          base_URL + `/api/users/${sellerId}`,
+          {}
+        );
         dispatchSeller({ type: 'USER_FETCH_SUCCESS', payload: data });
       } catch (err) {
         dispatchSeller({ type: 'USER_FETCH_FAIL', payload: getError(err) });
@@ -122,8 +127,7 @@ export default function SellerScreen() {
                           <img
                             className="small-seller"
                             src={user.seller.logo}
-                            alt={user.seller.name}
-                          ></img>
+                            alt={user.seller.name}></img>
                         </Col>
                         <Col className="start">
                           <h4>{user.seller.name}</h4>
@@ -133,8 +137,7 @@ export default function SellerScreen() {
                     <ListGroup.Item>
                       <Rating
                         rating={user.seller.rating}
-                        numReviews={user.seller.numReviews}
-                      ></Rating>
+                        numReviews={user.seller.numReviews}></Rating>
                     </ListGroup.Item>
                     <ListGroup.Item>{user.seller.description}</ListGroup.Item>
                   </ListGroup>

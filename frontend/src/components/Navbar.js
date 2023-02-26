@@ -17,7 +17,6 @@ import axios from 'axios';
 import { base_URL } from '../App';
 
 const NavBar = (props) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const { cart } = useSelector((state) => state.cart);
@@ -58,7 +57,7 @@ const NavBar = (props) => {
         <Container>
           {/* sidebar button*/}
           <Button variant="dark" onClick={sidebarHandler}>
-            <i className="fas fa-bars"></i>
+            <i className="fas fa-bars hamburger-icon"></i>
           </Button>
 
           <LinkContainer to="/">

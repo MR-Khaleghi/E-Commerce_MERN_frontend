@@ -43,7 +43,7 @@ function reducerDeleteOrder(state, action) {
 
 export default function OrderListScreen() {
   const navigate = useNavigate();
-  const {  userInfo } = useSelector(state => state.userInfo);
+  const { userInfo } = useSelector((state) => state.userInfo);
   const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
     loading: true,
     order: {},
@@ -60,7 +60,7 @@ export default function OrderListScreen() {
     const fetchOrder = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-        const { data } = await axios.get(base_URL+`/api/orders`, {
+        const { data } = await axios.get(base_URL + `/api/orders`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
@@ -79,9 +79,12 @@ export default function OrderListScreen() {
     if (window.confirm('Are you sure?')) {
       try {
         deleteDispatch({ type: 'DELETE_REQUEST' });
-        const { data } = await axios.delete(base_URL+`/api/orders/${order._id}`, {
-          headers: { authorization: `Bearer ${userInfo.token}` },
-        });
+        const { data } = await axios.delete(
+          base_URL + `/api/orders/${order._id}`,
+          {
+            headers: { authorization: `Bearer ${userInfo.token}` },
+          }
+        );
         deleteDispatch({ type: 'DELETE_SUCCESS', payload: data });
         //   toast.error(`toast Deleted Successfully.`);
         // console.log(data);
@@ -133,15 +136,13 @@ export default function OrderListScreen() {
                   <Button
                     type="button"
                     className="small"
-                    onClick={() => navigate(`/order/${order._id}`)}
-                  >
+                    onClick={() => navigate(`/order/${order._id}`)}>
                     Details
                   </Button>
                   <Button
                     type="button"
                     className="small"
-                    onClick={() => deleteHandler(order)}
-                  >
+                    onClick={() => deleteHandler(order)}>
                     Delete
                   </Button>
                 </td>

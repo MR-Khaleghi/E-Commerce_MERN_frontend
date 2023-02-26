@@ -35,7 +35,9 @@ function HomeScreen() {
       dispatch({ type: 'FETCH_START' });
       try {
         const seller = '';
-        const result = await axios.get(base_URL+`/api/products?seller=${seller}`);
+        const result = await axios.get(
+          base_URL + `/api/products?seller=${seller}`
+        );
         // console.log(result);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
         // setProducts(result.data);

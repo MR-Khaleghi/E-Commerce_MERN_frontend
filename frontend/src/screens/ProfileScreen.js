@@ -1,4 +1,4 @@
-import React, {  useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/esm/Button';
@@ -28,8 +28,7 @@ function reducer(state, action) {
 }
 
 export default function ProfileScreen() {
-  
-  const {  userInfo } = useSelector(state => state.userInfo);
+  const { userInfo } = useSelector((state) => state.userInfo);
   const [name, setName] = useState(userInfo.name);
   const [email, setEmail] = useState(userInfo.email);
   const [password, setPassword] = useState('');
@@ -57,7 +56,7 @@ export default function ProfileScreen() {
     try {
       dispatch({ type: 'UPDATE_REQUEST' });
       const { data } = await axios.put(
-        base_URL+`/api/users/profile`,
+        base_URL + `/api/users/profile`,
         { name, email, password, sellerName, sellerLogo, sellerDescription },
         {
           headers: { authorization: `Bearer ${userInfo.token}` },

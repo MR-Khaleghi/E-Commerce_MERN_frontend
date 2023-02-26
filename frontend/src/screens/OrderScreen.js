@@ -30,9 +30,11 @@ export default function OrderScreen() {
   const params = useParams();
   const { id: orderId } = params;
   const navigate = useNavigate();
-  const { cart: { shippingAddress}} = useSelector(state => state.cart);
-  const {  userInfo } = useSelector(state => state.userInfo);
-   
+  const {
+    cart: { shippingAddress },
+  } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.userInfo);
+
   const [{ loading, error, order }, dispatch] = useReducer(reducer, {
     loading: true,
     order: {},
@@ -43,7 +45,7 @@ export default function OrderScreen() {
     const fetchOrder = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-        const { data } = await axios.get(base_URL+`/api/orders/${orderId}`, {
+        const { data } = await axios.get(base_URL + `/api/orders/${orderId}`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
@@ -116,9 +118,8 @@ export default function OrderScreen() {
                       <Col md={6}>
                         <img
                           className="img-fluid rounded img_thumbnail"
-                          src={base_URL+item.image}
-                          alt={item.name}
-                        ></img>{' '}
+                          src={base_URL + item.image}
+                          alt={item.name}></img>{' '}
                         <Link to={`/product/${item.slug}`}>{item.name}</Link>
                       </Col>
                       <Col md={3}>

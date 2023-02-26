@@ -42,7 +42,7 @@ function reducerDeleteUser(state, action) {
 
 export default function UserListScreen() {
   const navigate = useNavigate();
-  const {  userInfo } = useSelector(state => state.userInfo);
+  const { userInfo } = useSelector((state) => state.userInfo);
   const [{ loading, error, users }, dispatch] = useReducer(reducer, {
     loading: true,
     error: '',
@@ -59,7 +59,7 @@ export default function UserListScreen() {
     const fetchUsers = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-        const { data } = await axios.get(base_URL+`/api/users`, {
+        const { data } = await axios.get(base_URL + `/api/users`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
@@ -78,9 +78,12 @@ export default function UserListScreen() {
     if (window.confirm('Are you sure?')) {
       try {
         deleteDispatch({ type: 'DELETE_REQUEST' });
-        const { data } = await axios.delete(base_URL+`/api/users/${user._id}`, {
-          headers: { authorization: `Bearer ${userInfo.token}` },
-        });
+        const { data } = await axios.delete(
+          base_URL + `/api/users/${user._id}`,
+          {
+            headers: { authorization: `Bearer ${userInfo.token}` },
+          }
+        );
         deleteDispatch({ type: 'DELETE_SUCCESS', payload: data });
         //   toast.error(`toast Deleted Successfully.`);
         // console.log(data);
@@ -130,8 +133,7 @@ export default function UserListScreen() {
                   <button
                     type="button"
                     className="small"
-                    onClick={() => deleteHandler(user)}
-                  >
+                    onClick={() => deleteHandler(user)}>
                     Delete
                   </button>
                 </td>

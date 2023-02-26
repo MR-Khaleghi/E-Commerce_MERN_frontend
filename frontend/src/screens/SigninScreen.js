@@ -24,7 +24,7 @@ export default function SigninScreen() {
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userInfo);
-
+  console.log(userInfo);
   const submitHandler = async (e) => {
     e.preventDefault();
     try {

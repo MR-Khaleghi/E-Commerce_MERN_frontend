@@ -33,14 +33,14 @@ export default function PlaceOrderScreen() {
   const [{ loading }, dispatch] = useReducer(reducer, { loading: false });
 
   const ctxDispatch = useDispatch();
-  const { cart: { shippingAddress, paymentMethod, cartItems }} = useSelector(state => state.cart);
-  const cart = useSelector(state => state.cart);
-  
+  const {
+    cart: { shippingAddress, paymentMethod, cartItems },
+  } = useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart);
 
-  const {  userInfo } = useSelector(state => state.userInfo);
+  const { userInfo } = useSelector((state) => state.userInfo);
 
   const navigate = useNavigate();
-  
 
   const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100; // 123.2345 => 123.23
   let itemsPrice = round2(
@@ -56,7 +56,7 @@ export default function PlaceOrderScreen() {
     try {
       dispatch({ type: 'CREATE_REQUEST' });
       const { data } = await axios.post(
-        base_URL+'/api/orders',
+        base_URL + '/api/orders',
         {
           orderItems: cartItems,
           shippingAddress: shippingAddress,
@@ -126,9 +126,8 @@ export default function PlaceOrderScreen() {
                       <Col md={6}>
                         <img
                           className="img-fluid rounded img_thumbnail"
-                          src={base_URL+item.image}
-                          alt={item.name}
-                        ></img>{' '}
+                          src={base_URL + item.image}
+                          alt={item.name}></img>{' '}
                         <Link to={`/product/${item.slug}`}>{item.name}</Link>
                       </Col>
                       <Col md={3}>
@@ -178,8 +177,7 @@ export default function PlaceOrderScreen() {
                     <Button
                       type="button"
                       onClick={placeOrderHandler}
-                      disabled={cartItems.length === 0}
-                    >
+                      disabled={cartItems.length === 0}>
                       Place Order
                     </Button>
                   </div>
